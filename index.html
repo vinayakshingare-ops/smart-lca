@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartLCA Mine - Admin Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-card">
@@ -25,19 +28,18 @@
             </form>
         </div>
     </div>
-    
-    <script src="js/auth.js"></script>
+
     <script>
         // Check if already logged in
         if (sessionStorage.getItem('adminLoggedIn') === 'true') {
             window.location.href = 'dashboard.html';
         }
 
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            
+
             if (user === 'admin' && pass === 'admin') {
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 window.location.href = 'dashboard.html';
@@ -47,4 +49,5 @@
         });
     </script>
 </body>
+
 </html>
