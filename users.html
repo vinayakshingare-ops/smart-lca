@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Registered - SmartLCA Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>SmartLCA Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="products.html">Products</a>
+                <a href="recycling-centers.html">Recycling Centers</a>
+                <a href="eco-alternatives.html">Eco Alternatives</a>
+                <a href="users.html" class="active">Users</a>
+            </nav>
+            <div class="logout-container">
+                <button id="logout-btn">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h2>Registered App Users</h2>
+            </header>
+
+            <div class="card"
+                style="margin-bottom: 20px; padding: 15px; background: rgba(255,87,34,0.1); border-left: 4px solid var(--danger-color); border-radius: 4px;">
+                <p><strong>Note:</strong> User management is read-only. For privacy and security reasons, you cannot
+                    edit user data directly from this dashboard.</p>
+            </div>
+
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>EcoCoins Earned</th>
+                            <th>City Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-list">
+                        <tr>
+                            <td colspan="4" style="text-align:center;">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/users.js"></script>
+</body>
+
+</html>

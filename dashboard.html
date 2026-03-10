@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartLCA Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script> <!-- Protection -->
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>SmartLCA Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="products.html">Products</a>
+                <a href="recycling-centers.html">Recycling Centers</a>
+                <a href="eco-alternatives.html">Eco Alternatives</a>
+                <a href="users.html">Users</a>
+            </nav>
+            <div class="logout-container">
+                <button id="logout-btn">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h2>Dashboard Overview</h2>
+                <div class="user-info">Logged in as Admin</div>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Products</h3>
+                    <div class="number" id="stats-products">--</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Recycling Centers</h3>
+                    <div class="number" id="stats-centers">--</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Eco Alternatives</h3>
+                    <div class="number" id="stats-alternatives">--</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Registered Users</h3>
+                    <div class="number" id="stats-users">--</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: white; padding: 20px; border-radius: 12px;">
+                <h3>Welcome!</h3>
+                <p>Use the sidebar to manage app data. Changes made here will reflect in the SmartLCA Mine mobile app
+                    immediately after updating the Firebase Database.</p>
+                <p style="color: #FF5722; margin-top: 10px; font-weight: 500;">Note: Make sure to update
+                    js/firebase-config.js with your real Firebase credentials so the dashboard stats fetch live data.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase Logic -->
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>
