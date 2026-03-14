@@ -1,0 +1,49 @@
+name: smart_lca_mine
+description: An environmental intelligence app combining satellite mining monitoring, product waste scanner, and eco-friendly alternatives marketplace.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  
+  # State Management
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+
+  # Firebase
+  firebase_core: ^2.27.0
+  cloud_firestore: ^4.15.8
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+  # Maps (OpenStreetMap - no API key needed)
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+
+  # ML & Camera
+  camera: ^0.12.0
+  mobile_scanner: ^7.2.0
+
+  # UI & Charts
+  google_fonts: ^8.0.2
+  fl_chart: ^1.1.1
+  url_launcher: ^6.2.1
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
