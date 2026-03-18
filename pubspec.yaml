@@ -31,12 +31,14 @@ dependencies:
   # ML & Camera
   camera: ^0.12.0
   mobile_scanner: ^7.2.0
+  cached_network_image: ^3.3.0
 
   # UI & Charts
   google_fonts: ^8.0.2
   fl_chart: ^1.1.1
   url_launcher: ^6.2.1
   http: ^1.1.0
+  google_generative_ai: ^0.4.7
 
 dev_dependencies:
   flutter_test:
@@ -45,5 +47,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/images/

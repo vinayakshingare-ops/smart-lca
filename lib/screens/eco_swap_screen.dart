@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../services/database_service.dart';
 import '../utils/app_theme.dart';
 
@@ -38,14 +39,19 @@ class EcoSwapScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppTheme.secondaryColor.withValues(alpha: 0.2),
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                    ),
-                    child: Center(
-                      // Placeholder for actual image
-                      child: Icon(Icons.shopping_bag, size: 50, color: AppTheme.primaryColor),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                    child: CachedNetworkImage(
+                      imageUrl: alt.imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: AppTheme.secondaryColor.withValues(alpha: 0.2),
+                        child: const Center(child: CircularProgressIndicator()),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: AppTheme.secondaryColor.withValues(alpha: 0.2),
+                        child: Center(child: Icon(Icons.shopping_bag, size: 50, color: AppTheme.primaryColor)),
+                      ),
                     ),
                   ),
                 ),

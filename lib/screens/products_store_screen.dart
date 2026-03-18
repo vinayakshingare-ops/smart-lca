@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product_model.dart';
 import '../providers/translation_provider.dart';
+import '../providers/store_provider.dart';
 import '../services/database_service.dart';
 import '../utils/app_theme.dart';
+import '../l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductsStoreScreen extends StatefulWidget {
   const ProductsStoreScreen({super.key});
@@ -13,28 +16,29 @@ class ProductsStoreScreen extends StatefulWidget {
 }
 
 class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
-  String _searchQuery = '';
-  String _selectedCategory = 'All';
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      if (mounted) {
+        final db = Provider.of<DatabaseService>(context, listen: false);
+        Provider.of<StoreProvider>(context, listen: false).loadProducts(db);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final tp = Provider.of<TranslationProvider>(context);
-    final db = Provider.of<DatabaseService>(context);
+    final store = Provider.of<StoreProvider>(context);
+    final db = Provider.of<DatabaseService>(context, listen: false);
 
-    // Use Firestore data if available, else mock fallback (which in this case we didn't add to DB Service explicitly, but we can do it)
-    List<EcoProduct> availableProducts = db.ecoProducts;
-
-    // Filtering logic
-    List<EcoProduct> filteredList = availableProducts.where((p) {
-      final matchesSearch = p.nameEn.toLowerCase().contains(_searchQuery.toLowerCase()) || 
-                            p.nameHi.contains(_searchQuery);
-      final matchesCategory = _selectedCategory == 'All' || p.category == _selectedCategory;
-      return matchesSearch && matchesCategory;
-    }).toList();
+    // Use filtered products from the provider
+    List<EcoProduct> filteredList = store.filteredProducts;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(tp.isHindi ? 'घरदे इको फ्रेंडली प्रोडक्ट' : 'Eco-Friendly Products'),
+        title: Text(AppLocalizations.of(context)!.storeTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.language),
@@ -42,12 +46,12 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
           )
         ],
       ),
-      body: availableProducts.isEmpty
+      body: store.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                _buildSearchBar(tp),
-                _buildFilterChips(),
+                _buildSearchBar(tp, store),
+                _buildFilterChips(store),
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.all(16),
@@ -68,13 +72,13 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
     );
   }
 
-  Widget _buildSearchBar(TranslationProvider tp) {
+  Widget _buildSearchBar(TranslationProvider tp, StoreProvider store) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
-        onChanged: (val) => setState(() => _searchQuery = val),
+        onChanged: (val) => store.setSearchQuery(val),
         decoration: InputDecoration(
-          hintText: tp.isHindi ? 'प्रोडक्ट खोजें...' : 'Search products...',
+          hintText: AppLocalizations.of(context)!.storeSearchHint,
           prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -86,7 +90,7 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
     );
   }
 
-  Widget _buildFilterChips() {
+  Widget _buildFilterChips(StoreProvider store) {
     final categories = ['All', 'Bottles', 'Bags', 'Utensils'];
     return SizedBox(
       height: 50,
@@ -96,14 +100,14 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final cat = categories[index];
-          final isSelected = _selectedCategory == cat;
+          final isSelected = store.selectedCategory == cat;
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: ChoiceChip(
               label: Text(cat),
               selected: isSelected,
               onSelected: (selected) {
-                if (selected) setState(() => _selectedCategory = cat);
+                if (selected) store.setSelectedCategory(cat);
               },
               selectedColor: AppTheme.primaryColor.withValues(alpha: 0.2),
               labelStyle: TextStyle(
@@ -129,12 +133,19 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  child: CachedNetworkImage(
+                    imageUrl: product.imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      color: Colors.grey[300],
+                      child: const Center(child: Icon(Icons.error, size: 50, color: Colors.grey)),
+                    ),
                   ),
-                  child: const Center(child: Icon(Icons.image, size: 50, color: Colors.grey)),
                 ),
                 Positioned(
                   top: 8,
@@ -192,7 +203,7 @@ class _ProductsStoreScreenState extends State<ProductsStoreScreen> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                       ),
-                      child: Text(tp.isHindi ? 'अभी खरीदें' : 'Buy Now', style: const TextStyle(fontSize: 12)),
+                      child: Text(AppLocalizations.of(context)!.storeBuyNow, style: const TextStyle(fontSize: 12)),
                     ),
                   )
                 ],

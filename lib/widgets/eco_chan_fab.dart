@@ -8,6 +8,7 @@ class EcoChanFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: 'eco-chan-fab',
       onPressed: () {
         Navigator.push(
           context,

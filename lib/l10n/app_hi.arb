@@ -1,0 +1,36 @@
+{
+    "@@locale": "hi",
+    "appName": "स्मार्ट एलसीए माइन",
+    
+    "tabHome": "होम",
+    "tabScanner": "स्कैनर",
+    "tabStore": "स्टोर",
+    "tabMap": "नक्शा",
+    "tabProfile": "प्रोफ़ाइल",
+
+    "homeEcoScore": "इको स्कोर",
+    "homeMiningAlert": "खनन अलर्ट",
+    "homeTopAlternative": "शीर्ष विकल्प",
+    "homeTopAlternativeSubtitle": "बांस की बोतल: -2kg CO2",
+    "homeQuickScanner": "त्वरित स्कैनर",
+    "homeQuickScannerSubtitle": "किसी भी प्रोडक्ट का बारकोड स्कैन करें",
+    "homeFindAction": "अपने आस-पास रिसाइक्लिंग बिन खोजें",
+
+    "storeTitle": "घरदे इको फ्रेंडली प्रोडक्ट",
+    "storeSearchHint": "प्रोडक्ट खोजें...",
+    "storeBuyNow": "अभी खरीदें",
+
+    "scannerTitle": "प्रोडक्ट स्कैनर",
+    "scannerDetecting": "पहचाना जा रहा है...",
+
+    "profileTitle": "प्रोफ़ाइल",
+    "profileRank": "रैंक",
+    "profileSettings": "सेटिंग्स",
+    "profileLanguage": "भाषा",
+    "profileDarkMode": "डार्क मोड",
+    "profileLeaderboard": "लीडरबोर्ड",
+    
+    "mapMiningMonitor": "खनन मॉनिटर",
+    "mapVegetationAlert": "वनस्पति अलर्ट:\nज़ोन C NDVI -0.15 गिरा",
+    "mapRecyclingCenters": "पुनर्चक्रण केंद्र"
+}

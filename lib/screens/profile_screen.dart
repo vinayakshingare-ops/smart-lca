@@ -4,6 +4,7 @@ import '../services/database_service.dart';
 import '../providers/translation_provider.dart';
 import '../providers/theme_provider.dart';
 import '../utils/app_theme.dart';
+import '../l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -17,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(tp.isHindi ? 'प्रोफ़ाइल' : 'Profile'),
+        title: Text(AppLocalizations.of(context)!.profileTitle),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -48,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
             // Settings
             ListTile(
               leading: const Icon(Icons.language),
-              title: Text(tp.isHindi ? 'भाषा (Language)' : 'Language'),
+              title: Text(AppLocalizations.of(context)!.profileLanguage),
               trailing: Switch(
                 value: tp.isHindi,
                 onChanged: (_) => tp.toggleLanguage(),
@@ -57,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
-              title: Text(tp.isHindi ? 'डार्क मोड' : 'Dark Mode'),
+              title: Text(AppLocalizations.of(context)!.profileDarkMode),
               trailing: Switch(
                 value: themeProvider.isDarkMode,
                 onChanged: (_) => themeProvider.toggleTheme(),
@@ -73,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                   const Icon(Icons.emoji_events, color: Colors.amber),
                   const SizedBox(width: 8),
                   Text(
-                    tp.isHindi ? 'लीडरबोर्ड (शीर्ष 50)' : 'Eco Leaderboard (Top 50)',
+                    AppLocalizations.of(context)!.profileLeaderboard,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],

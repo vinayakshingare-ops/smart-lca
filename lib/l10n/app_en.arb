@@ -1,0 +1,36 @@
+{
+    "@@locale": "en",
+    "appName": "SmartLCA Mine",
+    
+    "tabHome": "Home",
+    "tabScanner": "Scanner",
+    "tabStore": "Store",
+    "tabMap": "Map",
+    "tabProfile": "Profile",
+
+    "homeEcoScore": "Eco Score",
+    "homeMiningAlert": "Mining Alert",
+    "homeTopAlternative": "Top Alternative",
+    "homeTopAlternativeSubtitle": "Bamboo Bottle: -2kg CO2",
+    "homeQuickScanner": "Quick Scanner",
+    "homeQuickScannerSubtitle": "Scan any product barcode",
+    "homeFindAction": "Find recycling bins near you",
+
+    "storeTitle": "Eco-Friendly Products",
+    "storeSearchHint": "Search products...",
+    "storeBuyNow": "Buy Now",
+
+    "scannerTitle": "Product Scanner",
+    "scannerDetecting": "Detecting...",
+
+    "profileTitle": "Profile",
+    "profileRank": "Rank",
+    "profileSettings": "Settings",
+    "profileLanguage": "Language",
+    "profileDarkMode": "Dark Mode",
+    "profileLeaderboard": "Leaderboard",
+    
+    "mapMiningMonitor": "Mining Monitor",
+    "mapVegetationAlert": "Vegetation Alert:\nZone C NDVI dropped -0.15",
+    "mapRecyclingCenters": "Recycling Centers"
+}

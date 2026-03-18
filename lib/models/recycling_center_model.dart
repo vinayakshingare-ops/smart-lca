@@ -6,6 +6,8 @@ class RecyclingCenter {
   final List<String> acceptedMaterials;
   final String openingHours;
   final String address;
+  final double distanceKm;
+  final String contactPhone;
 
   RecyclingCenter({
     required this.id,
@@ -15,5 +17,7 @@ class RecyclingCenter {
     required this.acceptedMaterials,
     required this.openingHours,
     required this.address,
+    this.distanceKm = 0.0,
+    this.contactPhone = '',
   });
 }

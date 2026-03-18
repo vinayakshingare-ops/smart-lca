@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/database_service.dart';
 import '../models/product_model.dart';
+import '../services/gemini_service.dart';
 import '../utils/app_theme.dart';
 
 class ProductScannerScreen extends StatefulWidget {
@@ -27,32 +28,43 @@ class _ProductScannerScreenState extends State<ProductScannerScreen> {
         _isProcessing = true;
       });
 
-      // Mock processing delay to simulate API/ML load
-      await Future.delayed(const Duration(seconds: 1));
-      
-      // Fallback search to show a scanned product (we just mock it as always returning p1 if nothing matches)
+      // Show mock lookup first
       ProductModel? product = db.getProductByBarcode(code) ?? db.products.first;
-
       db.addEcoCoins(5); // Reward for scanning!
 
+      // Ask Gemini for analysis
+      final gemini = GeminiService();
+      final aiAnalysis = await gemini.analyzeProduct(
+          "Analyze the environmental impact of a product scanned via barcode '$code'. "
+          "The system thinks it is a '${product.name}'. "
+          "Provide a short 3 sentence summary of: 1) Its environmental impact, "
+          "2) General recycling instructions, and 3) An eco-friendly alternative."
+      );
+
       if (mounted) {
-        _showResultDialog(context, product);
+        _showResultDialog(context, product, aiAnalysis);
       }
     }
   }
 
-  void _showResultDialog(BuildContext context, ProductModel product) {
+  void _showResultDialog(BuildContext context, ProductModel product, String aiAnalysis) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) {
-        return Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.75,
+          minChildSize: 0.4,
+          maxChildSize: 0.95,
+          builder: (_, scrollController) => SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               Center(
                 child: Container(width: 50, height: 5, decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(10))),
               ),
@@ -70,6 +82,20 @@ class _ProductScannerScreenState extends State<ProductScannerScreen> {
               ),
               const SizedBox(height: 10),
               Text('CO2 Footprint: ${product.carbonImpact} kg', style: const TextStyle(fontSize: 16, color: Colors.black87)),
+              const Divider(height: 30, thickness: 1),
+              const Row(
+                children: [
+                   Icon(Icons.auto_awesome, color: AppTheme.primaryColor),
+                   SizedBox(width: 8),
+                   Text('AI Analysis (Gemini):', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppTheme.primaryColor)),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(color: AppTheme.primaryColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                child: Text(aiAnalysis, style: const TextStyle(fontSize: 15)),
+              ),
               const Divider(height: 30, thickness: 1),
               const Text('Recycling Instructions:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 8),
@@ -157,7 +183,8 @@ class _ProductScannerScreenState extends State<ProductScannerScreen> {
               )
             ],
           ),
-        );
+        ),
+      );
       }
     ).then((_) {
       if (mounted) {
