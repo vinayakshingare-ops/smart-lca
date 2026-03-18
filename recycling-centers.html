@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycling Centers - SmartLCA Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>SmartLCA Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="products.html">Products</a>
+                <a href="recycling-centers.html" class="active">Recycling Centers</a>
+                <a href="eco-alternatives.html">Eco Alternatives</a>
+                <a href="users.html">Users</a>
+            </nav>
+            <div class="logout-container">
+                <button id="logout-btn">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h2>Manage Recycling Centers</h2>
+                <button class="btn btn-primary" id="add-center-btn" style="width: auto;">+ New Center</button>
+            </header>
+
+            <div class="table-container">
+                <table id="centers-table">
+                    <thead>
+                        <tr>
+                            <th>Center Name</th>
+                            <th>Address</th>
+                            <th>Materials</th>
+                            <th>Hours</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="centers-list">
+                        <tr>
+                            <td colspan="5" style="text-align:center;">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Center Modal -->
+    <div id="center-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Center Details</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="center-form">
+                <input type="hidden" id="c_id">
+                <div class="form-group">
+                    <label>Center Name</label>
+                    <input type="text" id="c_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="c_addr" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Latitude</label>
+                        <input type="number" step="any" id="c_lat" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Longitude</label>
+                        <input type="number" step="any" id="c_lng" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Accepted Materials (comma separated)</label>
+                    <input type="text" id="c_mat" required placeholder="Plastic, Paper, Glass">
+                </div>
+                <div class="form-group">
+                    <label>Opening Hours</label>
+                    <input type="text" id="c_hours" required placeholder="9 AM - 6 PM">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="background:#666;"
+                        id="cancel-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-btn" style="width:auto;">Save Center</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/recycling-centers.js"></script>
+</body>
+
+</html>
